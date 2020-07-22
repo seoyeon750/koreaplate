@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>   
 
 <!DOCTYPE html>
 <html>
@@ -199,6 +200,37 @@
 	    #star_grade a.on{
 	        color: red;
 	    }
+	    
+	    .image-Content{
+		width:687px;
+		position: relative;
+	    margin-bottom: 10px;
+	    white-space: nowrap;
+	    overflow-x: auto;
+	    overflow-y: hidden;
+	    overflow-scrolling: touch;
+	    -webkit-overflow-scrolling: touch;
+		}
+		
+		.image_wrap{
+			font-size: 0;
+	    	line-height: 0;
+		}
+		
+		.reviewPicture >img{
+			display: inline-block;
+		    width: 200px;
+		    height: 200px;
+		    margin-right: 6px;
+		    background-size: cover;
+		    background-position: 50% 50%;
+		    background-repeat: no-repeat;
+		    cursor: pointer;
+		}
+		
+		.reviewPicture{
+			display:inline-block;
+		}
 	</style>
 	
 	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -255,13 +287,8 @@
 		    
 		});
 		
-		function fn_insertReview(form) {
-			if ($('#star').val()=='') {
-				alert('평점을 입력하세요.');
-				return;
-			}
-			
-			form.action='insertReview';
+		function fn_UpdateReview(form) {
+			form.action='UpdateReview';
 			form.submit();
 		}
 	</script>
@@ -269,32 +296,84 @@
 </head>
 <body>
 
-	<c:if test="${sessionScope.dSaup_no != null}">
-		<script type="text/javascript">
-			alert('기업 회원은 리뷰 작성이 불가능합니다.');
-			location.href='viewPage?dSaup_no=' + ${deptDTO.dSaup_no};
-		</script>
+	<!-- 내가 작성한 리뷰 -->
+	<c:if test="${rdto.cNickname == sessionScope.cNickname }">
+	   	<form name="myForm" method="post" enctype="multipart/form-data">
+			<div class="ReviewWritenpage_Container">
+				<div class="ReviewWritenpage_DeptName">
+					<strong class="DeptName">${deptdto.dName}</strong>
+				</div>
+				<div class="ReviewPoint">		
+					<p id="star_grade">
+				        <c:forEach var="i" begin="0" end="5" step="1">
+							<c:if test="${rdto.rPoint > i }">
+							 <a class="on">★</a>
+							</c:if>
+							<c:if test="${rdto.rPoint < i }">
+								<a >★</a>
+							</c:if>
+				      </c:forEach>
+					</p>
+					<input id="star" type="hidden" name="rPoint" value='${rdto.rPoint }'/>
+				</div>
+				
+				<div class="ReviewWritenPage_ContentWrap">
+					<div class="ReviewWritenPage_FormWrap">
+						<div class="ReviewWritenPage_Content">
+							<div class="ReviewWritenPage_Title">
+								<input id="title" type="text" name="rTitle" size="50" placeholder="제목을 입력하세요." value='${rdto.rTitle}'>
+							</div>
+							<textarea name="rContent" class="ReviewWritenPage_Editor" id="review" rows="1" cols="1" placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!">${rdto.rContent}</textarea>
+							<p class="ReviewWritenPage_TextLength" id="lengthResult">
+								0 / 2000
+							</p>
+						</div>
+					</div>
+					<div class="image-Content">
+						<div class="image_wrap">
+							<c:set var="img" value="${rdto.rPhoto }"></c:set>
+							<c:forEach var="img" items="${fn:split(img,',') }">
+								<div class="reviewPicture">
+									<img alt="${img }" src="${pageContext.request.contextPath}/resources/storage/review_img/${img}">
+								</div>
+							</c:forEach>
+						</div>
+					</div>
+					
+					<div class="ReviewWritenPage_TextWrap">
+						<div class="ReviewWritenPage_PictureWrap">
+							<input type="file" id="input_file" name="rPhoto" multiple /> 
+							<a class="notice">10MB이하의 파일만 업로드 가능합니다.</a>
+						</div>
+					</div>
+				</div>
+				<div class="ReviewWritenPage_ButtonsWrap">		
+					<input type="hidden" value="${cNo }" name="cNo">
+					<input type="hidden" value="${deptDTO.dSaup_no }" name="dSaup_no">
+					<input type="hidden" value="${rdto.rNo }" name="rNo">
+					<input type="button" id="submitBtn" class="ReviewWritingPage_SubmitButton ReviewWritingPage_SubmitButton_Deactive"  onclick="fn_UpdateReview(this.form)" value="수정하기" />
+				</div>
+			</div>
+		</form>
 	</c:if>
 	
-	<c:if test="${sessionScope.cId == null && sessionScope.dSaup_no == null}">
-		<script type="text/javascript">
-			alert('로그인후 리뷰 작성이 가능합니다. 로그인후 이용해주세요.');
-			location.href='logout';
-		</script>
-	</c:if>
-	
-   	<form name="myForm" method="post" enctype="multipart/form-data">
+	<!-- 다른 사람이 작성한 리뷰 -->
+	<c:if test="${rdto.cNickname != sessionScope.cNickname }">
+		<form name="myForm" method="post" enctype="multipart/form-data">
 		<div class="ReviewWritenpage_Container">
 			<div class="ReviewWritenpage_DeptName">
-				<strong class="DeptName">${deptDTO.dName }</strong>
+				<strong class="DeptName">${deptdto.dName}</strong>
 			</div>
 			<div class="ReviewPoint">				
-				<p id="star_grade">
-			        <a onclick="mark(1)">★</a>
-			        <a onclick="mark(2)">★</a>
-			        <a onclick="mark(3)">★</a>
-			        <a onclick="mark(4)">★</a>
-			        <a onclick="mark(5)">★</a>
+				<p>
+			      <c:forEach var="i" begin="0" end="5" step="1">
+					<c:if test="${rdto.rPoint > i }">
+					 <a class="on">★</a>
+					</c:if>
+					<c:if test="${rdto.rPoint < i }">
+						<a >★</a>
+					</c:if>
+			      </c:forEach>
 				</p>
 				<input id="star" type="hidden" name="rPoint"/>
 			</div>
@@ -302,30 +381,25 @@
 			<div class="ReviewWritenPage_ContentWrap">
 				<div class="ReviewWritenPage_FormWrap">
 					<div class="ReviewWritenPage_Content">
-						<div class="ReviewWritenPage_Title">
-							<input id="title" type="text" name="rTitle" size="50" placeholder="제목을 입력하세요."/>
-						</div>
-						<textarea name="rContent" class="ReviewWritenPage_Editor" id="review" rows="1" cols="1" placeholder="주문하신 메뉴는 어떠셨나요? 식당의 분위기와 서비스도 궁금해요!"></textarea>
-						<p class="ReviewWritenPage_TextLength" id="lengthResult">
-							0 / 2000
-						</p>
+						<div class="ReviewWritenPage_Title">${rdto.rTitle}</div>
+						<pre>${rdto.rContent }</pre>
 					</div>
 				</div>
-				<div class="ReviewWritenPage_TextWrap">
-					<div class="ReviewWritenPage_PictureWrap">
-						<input type="file" id="input_file" name="rPhoto" multiple /> 
-						<a class="notice">10MB이하의 파일만 업로드 가능합니다.</a>
+				<div class="image-Content">
+					<div class="image_wrap">
+						<c:set var="img" value="${rdto.rPhoto }"></c:set>
+						<c:forEach var="img" items="${fn:split(img,',') }">
+							<div class="reviewPicture">
+								<img alt="${img }" src="${pageContext.request.contextPath}/resources/storage/review_img/${img}">
+							</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
-			<div class="ReviewWritenPage_ButtonsWrap">		
-				<input type="hidden" value="${cNo }" name="cNo">
-				<input type="hidden" value="${deptDTO.dSaup_no }" name="dSaup_no">
-				<input type="button" class="ReviewWritingPage_CalcelButton" data-dismiss="modal" value="취소"/>
-				<input type="button" id="submitBtn" class="ReviewWritingPage_SubmitButton ReviewWritingPage_SubmitButton_Deactive"  onclick="fn_insertReview(this.form)" value="리뷰 올리기" />
-			</div>
+			-
 		</div>
 	</form>
+	</c:if>
 
 </body>
 </html>

@@ -7,13 +7,14 @@ public class ReviewDTO {
 	private int rNo, rPoint, rReportCount, cNo;
 	private String rTitle, rContent, rPhoto, rAppointment, dSaup_no;
 	private Date rWriter_date;
+	private String cPhoto, cNickname;
 	
 	public ReviewDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
 	public ReviewDTO(int rNo, int rPoint, int rReportCount, int cNo, String rTitle, String rContent, String rPhoto,
-			String rAppointment, String dSaup_no, Date rWriter_date) {
+			String rAppointment, String dSaup_no, Date rWriter_date, String cPhoto, String cNickname) {
 		super();
 		this.rNo = rNo;
 		this.rPoint = rPoint;
@@ -25,7 +26,11 @@ public class ReviewDTO {
 		this.rAppointment = rAppointment;
 		this.dSaup_no = dSaup_no;
 		this.rWriter_date = rWriter_date;
+		this.cPhoto = cPhoto;
+		this.cNickname = cNickname;
 	}
+
+
 
 	public int getrNo() {
 		return rNo;
@@ -105,6 +110,22 @@ public class ReviewDTO {
 
 	public void setrWriter_date(Date rWriter_date) {
 		this.rWriter_date = rWriter_date;
+	}
+
+	public String getcPhoto() {
+		return cPhoto;
+	}
+
+	public void setcPhoto(String cPhoto) {
+		this.cPhoto = cPhoto;
+	}
+
+	public String getcNickname() {
+		return cNickname;
+	}
+
+	public void setcNickname(String cNickname) {
+		this.cNickname = cNickname;
 	}
 	
 }

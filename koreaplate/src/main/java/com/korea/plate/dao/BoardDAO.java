@@ -29,18 +29,12 @@ public interface BoardDAO {
 	// 리뷰 가져오기 
 	public ArrayList<ReviewDTO> reviewList(String dSaup_no);
 	
-	
-	
-	
-	
-	
-	//test
+	// 리뷰 가져오기 (전체/비예약자/예약자 필터링)
 	public ArrayList<ReviewDTO> reviewAll(String dSaup_no);
 	public ArrayList<ReviewDTO> reviewAp(String dSaup_no);
 	public ArrayList<ReviewDTO> reviewNp(String dSaup_no);
 	
-	//ReviewDetail
+	// 리뷰 누르면 리뷰 창
 	public ReviewDTO reivewDetail(int rNo);
 	
-	/*public CustomerDTO cdto = UserInfo()*/
 }

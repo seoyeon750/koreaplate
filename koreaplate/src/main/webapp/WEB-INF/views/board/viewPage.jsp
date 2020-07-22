@@ -57,9 +57,9 @@
 							html+='<button class="RestaurantReviewItem__Link" onclick="fnMove()" data-remote="reviewDetail?rNo='+data[i].rNo+'" data-toggle="modal" data-target="#myModal">';
 			    			html+='<div class="RestaurantReviewItem__User">';
 			    			html+='<div class="RestaurantReviewItem__UserPictureWrap">';
-			    			html+='<img class="RestaurantReviewItem__UserPicture loaded" alt='+data[i].cPoto+' src="${pageContext.request.contextPath }/resources/storage/user_img/'+data[i].cPoto+'">';
+			    			html+='<img class="RestaurantReviewItem__UserPicture loaded" alt='+data[i].cPhoto+' src="${pageContext.request.contextPath }/resources/storage/user_img/'+data[i].cPhoto+'">';
 			    			html+='</div>';
-				      		html +='<span class="RestaurantReviewItem__UserNickName">'+data[i].cNickname+'</span>';
+				      		html+='<span class="RestaurantReviewItem__UserNickName">'+data[i].cNickname+'</span>';
 					      	html+='</div>';
 					      	html+='<div class="RestaurantReviewItem__ReviewContent">';	
 					      	html+='<div class="RestaurantReviewItem__ReviewTextWrap">';	
@@ -392,13 +392,13 @@
 						<ul class="RestaurantReviewList__ReviewList">
 							<c:forEach var ="review" items="${reviewList }">
 								<li class="RestaurantReviewItem RestaurantReviewList__ReviewItem">
-									<button class="RestaurantReviewItem__Link" onclick="fnMove()"  data-remote="reviewDetail?rNo=${review.rNo }" data-toggle="modal" data-target="#myModal">
+									<button class="RestaurantReviewItem__Link" onclick="fnMove()" data-remote="reviewDetail?rNo=${review.rNo }" data-toggle="modal" data-target="#myModal">
 										<div class="RestaurantReviewItem__User">
 											<div class="RestaurantReviewItem__UserPictureWrap">
-												<c:if test="${review.cPoto !='' }">
-													<img class="RestaurantReviewItem__UserPicture loaded" alt="${review.cPoto }" src="${pageContext.request.contextPath }/resources/storage/user_img/${review.cPoto }">
+												<c:if test="${review.cPhoto !='' }">
+													<img class="RestaurantReviewItem__UserPicture loaded" alt="${review.cPhoto }" src="${pageContext.request.contextPath }/resources/storage/user_img/${review.cPhoto }">
 												</c:if>
-												<c:if test="${review.cPoto =='' }">
+												<c:if test="${review.cPhoto =='' }">
 													<img class="RestaurantReviewItem__UserPicture loaded" alt="기본이미지" src="${pageContext.request.contextPath }/resources/storage/user_img/unUseImage">
 												</c:if>
 											</div>
