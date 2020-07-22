@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.korea.plate.dao.BoardDAO">
+
+	<!-- 조회수 증가 -->
+	<update id="UpdateHit">
+		UPDATE DEPARTMENT_INFO SET DHIT = DHIT + 1 WHERE DSAUP_NO = #{dSaup_no}
+	</update>
+	
+	<!-- 평점 업데이트 -->
+	<update id="DepartRatingUpdate">
+		UPDATE DEPARTMENT_INFO SET DRATING = (SELECT NVL(AVG(RPOINT), 0) FROM REVIEW WHERE DSAUP_NO = #{dSaup_no}) WHERE DSAUP_NO = #{dSaup_no}
+	</update>
+	
+	<!-- 선택한 업체 보여주기 -->
+	<select id="DepartView" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM DEPARTMENT_INFO WHERE DSAUP_NO = #{dSaup_no}
+	</select>
+	
+	<!-- 우측에 보여줄 동일한 지역 맛집 리스트 -->
+	<select id="getSide_list" parameterType="String" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM DEPARTMENT_INFO WHERE DADDRESS LIKE '%' || #{param1} || '%' AND NOT DNAME = #{param2} AND DACCEPT = 1 ORDER BY DRATING DESC
+	</select>
+	
+	<!-- 선택한 맛집의 총 예약 수 -->
+	<select id="appointmentCount" resultType="int">
+		SELECT COUNT(*) AS COUNT FROM APPOINTMENT WHERE DSAUP_NO = #{dSaup_no}
+	</select>
+	
+	<!-- 선택한 맛집의 메뉴 리스트 -->
+	<select id="menuList" resultType="com.korea.plate.dto.MenuDTO">
+		SELECT * FROM MENU_INFO WHERE DSAUP_NO = #{dSaup_no}
+	</select>
+	
+	<!-- 리뷰 리스트 -->
+	<select id="reviewList" resultType="com.korea.plate.dto.ReviewDTO">
+		SELECT R.RNO, R.RPOINT, R.REPORTCOUNT, C.CPHOTO, C.CNICKNAME, R.RTITLE, R.RCONTENT, R.RPHOTO, R.RWRITER_DATE, R.RAPPOINTMENT
+		FROM REVIEW R, CUSTOMER C
+		WHERE R.DSAUP_NO = #{dSaup_no} AND R.CNO = C.CNO
+		ORDER BY R.RNO DESC
+	</select>
+	
+	
+	
+	
+	<!--
+	<select id="reviewAll" resultType="com.koreait.projectE.dto.ReviewDTO">
+		select r.rNo,r.rpoint,r.rdepth,r.REPORTCOUNT,c.cPoto,c.cnickname,r.rTitle,r.rcontent,r.rPoto,r.rwriter_date,r.rAppointment 
+		from review r,customer c 
+		where RAPPOINTMENT >= 0 and dSaup_no=#{dSaup_no} and r.cNo=c.cNo
+	</select>
+	<select id="reviewAp" resultType="com.koreait.projectE.dto.ReviewDTO">
+		select r.rNo,r.rpoint,r.rdepth,r.REPORTCOUNT,c.cPoto,c.cnickname,r.rTitle,r.rcontent,r.rPoto,r.rwriter_date,r.rAppointment 
+		from review r,customer c 
+		where RAPPOINTMENT > 0 and dSaup_no=#{dSaup_no} and r.cNo=c.cNo
+	</select>
+	<select id="reviewNp" resultType="com.koreait.projectE.dto.ReviewDTO">
+		select r.rNo,r.rpoint,r.rdepth,r.REPORTCOUNT,c.cPoto,c.cnickname,r.rTitle,r.rcontent,r.rPoto,r.rwriter_date,r.rAppointment 
+		from review r,customer c 
+		where RAPPOINTMENT = 0 and dSaup_no=#{dSaup_no} and r.cNo=c.cNo
+	</select>
+	<select id="reivewDetail" resultType="com.koreait.projectE.dto.ReviewDTO">
+		select  r.rNo,r.rpoint,r.rdepth,r.REPORTCOUNT,c.cPoto,c.cnickname,r.rTitle,r.rcontent,r.rPoto,r.rwriter_date,r.rAppointment,
+		r.dSaup_no 
+		from review r,customer c 
+		where  r.cno=c.cno and r.rno=#{rNo}
+	</select> -->
+	
+</mapper>

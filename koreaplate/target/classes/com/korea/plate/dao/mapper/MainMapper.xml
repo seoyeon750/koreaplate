@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.korea.plate.dao.MainDAO">
 	
-	<!-- 지역리스트 -->
+	<!-- 지역별 맛집 리스트 -->
 	<select id="main_list" resultType="com.korea.plate.dto.MainDTO">
 		SELECT SUBSTR(DADDRESS, 1, INSTR(DADDRESS, ' ', 1, 1) -1) AS DONG, COUNT(*) AS COUNT
 		FROM DEPARTMENT_INFO
@@ -13,22 +13,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		GROUP BY SUBSTR(DADDRESS, 1, INSTR(DADDRESS, ' ', 1, 1) -1)
 	</select>
 	
+	<!-- 선택한 지역의 맛집 리스트 -->
 	<select id="location_list" 	resultType="com.korea.plate.dto.DepartmentINFODTO">
-		select * from department_info 
-		where daddress like '%' || #{location} ||'%' and DACCPET=1 order by dRating desc	
+		SELECT * FROM DEPARTMENT_INFO WHERE DADDRESS LIKE '%' || #{location} || '%' AND DACCEPT = 1 ORDER BY DRATING DESC
 	</select>
 	
+	<!-- 선택한 지역의 맛집 수 -->
 	<select id="get_locationCount" resultType="com.korea.plate.dto.MainDTO">
-		select substr(daddress,1,INSTR(DADDRESS,' ',1,1)-1) as dong,count(*) as count
-		from department_info 
-		where daddress like '%' || #{location} ||'%' and DACCPET=1
-		group by substr(daddress,1,INSTR(DADDRESS,' ',1,1)-1)
+		SELECT SUBSTR(DADDRESS, 1, INSTR(DADDRESS, ' ', 1, 1) -1) AS DONG, COUNT(*) AS COUNT
+		FROM DEPARTMENT_INFO
+		WHERE DADDRESS LIKE '%' || #{location} || '%' AND DACCEPT = 1
+		GROUP BY SUBSTR(DADDRESS, 1, INSTR(DADDRESS, ' ', 1, 1) -1)
 	</select>
 	
+	<!-- 검색 결과 -->
 	<select id="search_list" resultType="com.korea.plate.dto.DepartmentINFODTO">
-		select *
-		from department_info
-		where DNAME like '%' || #{query} || '%' or daddress like '%' || #{query} ||'%' and DACCPET=1
+		SELECT * FROM DEPARTMENT_INFO WHERE DNAME LIKE '%' || #{query} || '%' OR DADDRESS LIKE '%' || #{query} || '%' AND DACCEPT = 1
 	</select>
 
 </mapper>
