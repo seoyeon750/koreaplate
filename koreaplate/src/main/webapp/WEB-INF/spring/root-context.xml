@@ -18,12 +18,12 @@
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="ds" />
-		<property name="mapperLocations" value="classpath:com/koreait/projectE/dao/mapper/*.xml" />
+		<property name="mapperLocations" value="classpath:com/korea/plate/dao/mapper/*.xml" />
 	</bean>
 	
 	<bean id="sqlsession" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg ref="sqlSessionFactory" />
-	</bean>	
+	</bean>
 	
 	<!-- FileUpdate bean -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
