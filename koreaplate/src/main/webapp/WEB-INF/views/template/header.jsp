@@ -7,9 +7,9 @@
 <meta charset="UTF-8">
 <title>코리아플레이트:나만의 맛집 지도</title>
 
-<link rel="stylesheet" href="resources/assets/style/main.css" type="text/css">
-<link rel="stylesheet" href="resources/assets/style/nav.css" type="text/css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+	<link rel="stylesheet" href="resources/assets/style/main.css" type="text/css">
+	<link rel="stylesheet" href="resources/assets/style/nav.css" type="text/css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 	
 	<script src="https://code.jquery.com/jquery-2.2.2.js"></script>
 	<script type="text/javascript">
@@ -79,13 +79,13 @@
 
 	<script type="text/javascript">
 		function fn_search() {
-			var search_keyword = $(#search_keyword).val();
+			var search_keyword = $('#search_keyword').val();
 			location.href="searchPage?main-search=search_keyword";
 		}
 	</script>
 	
 </head>
-<body class="pt-5">
+<body>
 
 	<header class="Header" data-page="home">
 		<ul class="nav-wrap">
@@ -94,9 +94,9 @@
 				</li>
 				<li class="nav-search-wrap" >
 					<form class="nav-search-form" action="searchPage">
-					<div class="nav-icon-box"><i class="fab fa-searchengin"></i></div>
-					<input id="search_keyword" class="nav-HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역 또는 맛집 이름" autocomplete="off">
-					<input class="nav-search-submit" type="submit" value="전송">
+						<div class="nav-icon-box"><i class="fab fa-searchengin"></i></div>
+						<input id="search_keyword" class="nav-HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역 또는 맛집 이름" autocomplete="off">
+						<input class="nav-search-submit" type="submit" value="전송">
 					</form>
 				</li>
 				<c:if test="${sessionScope !=null && sessionScope.cGrede==5 }">

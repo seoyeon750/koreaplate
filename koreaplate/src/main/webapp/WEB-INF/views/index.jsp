@@ -7,9 +7,9 @@
 
 <% request.setCharacterEncoding("utf-8"); %>
 
-<link rel="stylesheet" href="resources/assets/style/main-nav.css" type="text/css">
-
 <%@ include file="template/header.jsp" %>
+
+	<link rel="stylesheet" href="resources/assets/style/main-nav.css" type="text/css">
 	
 	<script>
 		$(function () {
