@@ -108,7 +108,7 @@
 		$(function(){
 			$('#login_dept').click(function(){
 				$.ajax({
-		               url: '/koreaplate/VerifyRecaptcha',
+		               url: 'VerifyRecaptcha',
 		               type: 'post',
 		               data: {
 		                   recaptcha: $("#g-recaptcha-response").val()
@@ -127,8 +127,7 @@
 			           							
 			           						} else {
 			           							alert('로그인 실패');
-			           						} 
-			           							
+			           						} 	
 			           					},
 			           					error:function() {
 			           						alert('AJAX 통신 실패');

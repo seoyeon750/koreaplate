@@ -3,6 +3,7 @@ package com.korea.plate.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,7 @@ public class CustomerController {
         }
     }
 	
+	// 일반회원 로그인
 	@RequestMapping(value="customerLogin", method=RequestMethod.POST,produces="text/html; charset=utf-8")
 	@ResponseBody
 	public String customerLogin(HttpServletRequest request) {
@@ -124,6 +126,16 @@ public class CustomerController {
 			result = "1";
 		}
 		return result;
+	}
+	
+	// 로그아웃
+	@RequestMapping("logout")
+	public String logout(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if (session != null) {
+			session.invalidate();
+		}
+		return "redirect:loginChoicePage";
 	}
 	
 }

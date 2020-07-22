@@ -19,22 +19,12 @@ public interface CustomerDAO {
 	// 일반 회원 로그인
 	public CustomerDTO customerLogin(String cId, String cPw);
 	
-	/*// 업체 회원가입
-	public void deptSignUp(String dSaup_no, String dId, String dPw );
-	
+	/*
 	// 일반 회원 사진 업데이트
 	public void customerPhotoUpdate(String cNo, String saveFilename);
 	
 	
-	// 사업자 아이디 중복체크
-	public int deptidCheck(String dId);
-	
-	// 사업자 번호 중복 체크
-	public int dSaup_noCheck(String dSaup_no);
-	
-	
-	
-	
+
 	// 일반 회원 마이홈
 	public CustomerDTO selectBycNo(int cNo);
 	
@@ -59,8 +49,6 @@ public interface CustomerDAO {
 	// 일반 회원 프로필 변경
 	public int cPhotoUpdate(String cPhoto, int cNo);
 	
-	// 사업자 로그인
-	public DepartmentLoginDTO departmentLogin(String dId,String dPw);
 	
 	// 사업자 마이홈
 	public DepartmentDTO selectBydSaup_no(String dSaup_no);

@@ -37,15 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET CPOTO = #{param2}
 		WHERE CNO = #{param1}
 	</update>
-	
-	<insert id="deptSignUp">
-		INSERT INTO DEPARTMENT(DSAUP_NO, DID, DPW)
-		VALUES (#{param1}, #{param2}, #{param3})
-	</insert>
-	
-	
-	
-	
 		
 	<select id="selectBycNo" resultType="com.koreait.projectE.dto.CustomerDTO">
 		SELECT *
@@ -95,11 +86,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE CNO = #{param2}
 	</update>
 	
-	<select id="departmentLogin" parameterType="String" resultType="com.koreait.projectE.dto.DepartmentLoginDTO">
-		SELECT *
-		FROM DEPARTMENT
-		WHERE DID = #{param1} AND DPW = #{param2}
-	</select>
+	
 	
 	<select id="selectBydSaup_no" parameterType="String" resultType="com.koreait.projectE.dto.DepartmentDTO">
 	SELECT *
@@ -113,15 +100,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE DSAUP_NO = #{param2}
 	</update>
 	
-	<select id="deptidCheck" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM DEPARTMENT 
-		WHERE DID = #{param1} 
-	</select> 
 	
-	<select id="dSaup_noCheck" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM DEPARTMENT
-		WHERE DSAUP_NO = #{param1}
-	</select>
+	
 	
 	<insert id="departInsert">
 		INSERT INTO DEPARTMENT_INFO

@@ -36,12 +36,6 @@
 				location.href = 'logout';
 			}
 		}
-		
-		function fn_deptlogout() {
-			if(confirm('로그아웃하시겠습니까?')){
-				location.href = 'deptlogout';
-			}
-		}
 	</script>
 
 	<style>
