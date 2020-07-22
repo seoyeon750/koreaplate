@@ -1,18 +1,17 @@
 <%@page import="org.springframework.web.context.annotation.SessionScope"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.2.1/js.cookie.js"></script>
+
 <% request.setCharacterEncoding("utf-8"); %>
 
-<%-- <%@ include file="template/header.jsp" %> --%>
-	
+<link rel="stylesheet" href="resources/assets/style/main-nav.css" type="text/css">
 
-
-	<link rel="stylesheet" href="resources/assets/style/main-nav.css" type="text/css">
+<%@ include file="template/header.jsp" %>
 	
 	<script>
-	
 		$(function () {
 		    var lastScrollTop = 0,
 		        delta = 15;
@@ -40,7 +39,6 @@
 			}); 
 		});
 		
-		
 		$( document ).ready(function() {
 		    $(document).mouseup(function(e){
 		    var container = $(".invisible");
@@ -48,7 +46,6 @@
 		        container.hide();
 		    });
 		});
-	
 	</script>
 	
 	 <script>
@@ -66,45 +63,7 @@
 			}
 			$('.invisible').html(html);
 		});
-		
 	</script> 
-	
-	
-	<style>
-		.invisible {
-			margin-top: 1px;
-			margin-left:80px;
-			top: 61px;
-			width: 500px;
-			position: absolute;
-			background: white;
-			z-index: 999;
-			border: 2px solid #ff7100;
-			border-top: 0;
-		}
-		
-		.item {
-			height: 1.8em;
-			width: 220px;
-			margin-left: 5px;
-			margin-top: 10px;
-			outline: none;
-			font-size: 20px;
-    		padding-left: 15px;
-    		color: lightgray;
-		}
-		
-		.item:hover {
-			color: #9baec8;
-		}
-		
-		#aa {
-			text-decoration: none;
-		}
-		
-
-	</style>
-	
 	
 	<div class="header-wrap">
 		<div class="title-wrap">
@@ -116,27 +75,16 @@
 	 		<div class="main-search">
 				<div class="icon-box"><i class="fas fa-search"></i></div>
 				<form class="search-form" action="searchPage">
-				<input id="search-input" class="HomeSearchInput" name="main-search" type="text" maxlength="50" 
-					placeholder="지역명, 맛집 이름"	autocomplete="off" >
-				<input class="btn-search" type="submit" value="검색">
-
+					<input id="search-input" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역명, 맛집 이름"	autocomplete="off" />
+					<input class="btn-search" type="submit" value="검색" />
     			</form>
-				<div class="invisible" style="display: none">
-			       
-			       <!-- <div class="item"><a href="searchPage?main-search=" ></a></div> -->
-
-    			</div>
 			</div>					
 		</div>
-		
 		
 		<video autoplay loop muted>
 			<source src="<c:url value="/resources/assets/video/indexvideo01.mp4" />" type="video/mp4">
 		</video>
 	</div>
 	
-<%-- 	<%@ include file="main.jsp" %>
-	
-<%@ include file="template/footer.jsp" %> --%>
-
-
+<%@ include file="main.jsp" %>
+<%@ include file="template/footer.jsp" %>
