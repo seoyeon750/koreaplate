@@ -21,7 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 업체 로그인 -->
-	<select id="departmentLogin" parameterType="String" resultType="com.koreait.projectE.dto.DepartmentLoginDTO">
+	<select id="departmentLogin" parameterType="String" resultType="com.korea.plate.dto.DepartmentDTO">
 		SELECT *FROM DEPARTMENT WHERE DID = #{param1} AND DPW = #{param2}
 	</select>
 	
