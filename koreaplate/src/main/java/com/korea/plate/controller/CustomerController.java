@@ -20,6 +20,7 @@ import com.korea.plate.command.VerifyRecaptcha;
 import com.korea.plate.command.Cust.CustomerEmailAuthCommand;
 import com.korea.plate.command.Cust.CustomerMyPageCommand;
 import com.korea.plate.command.Cust.CustomerMyPagePhotoUpdateCommand;
+import com.korea.plate.command.Cust.CustomerSignOutCommand;
 import com.korea.plate.command.Cust.CustomerSignUpCommand;
 import com.korea.plate.common.Command;
 import com.korea.plate.dao.CustomerDAO;
@@ -175,5 +176,18 @@ public class CustomerController {
 		return "redirect:myPage";
 	}
 	
+	// 일반회원 탈퇴
+	@RequestMapping("customerSignOut")
+	public String customerSignOut(HttpServletRequest request, Model model) {
+		model.addAttribute("request", request);
+		command = new CustomerSignOutCommand();
+		command.execute(sqlSession, model);
+		HttpSession session = request.getSession();
+		
+		if (session != null) {
+			session.invalidate();
+		}
+		return "redirect:index"; 
+	}
 	
 }

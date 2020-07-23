@@ -39,8 +39,13 @@ public interface CustomerDAO {
 	// 일반회원 비밀번호 변경
 	public int pwUpdate(String cPw, int cNo);
 	
-	// 일반 회원 사진 업데이트
+	// 일반회원 사진 변경
 	public void customerPhotoUpdate(String cNo, String saveFilename);
+	
+	// 일반회원 탈퇴
+	public void customerSignOut1(String cNo);
+	public void customerSignOut2(String cNo);
+	public void customerSignOut3(String cNo);
 
 	/*
 	// 일반 회원 프로필 변경
@@ -82,11 +87,6 @@ public interface CustomerDAO {
 	public void deptSignOut3(String dSaup_no);
 	public void deptSignOut4(String dSaup_no);
 	public void deptSignOut5(String dSaup_no);
-
-	// 일반 회원 탈퇴
-	public void customerSignOut1(String cNo);
-	public void customerSignOut2(String cNo);
-	public void customerSignOut3(String cNo);
 	
 	// 업체 메뉴 추가
 	public void menuInsert(String menu, String price, String dSaup_no);

@@ -68,6 +68,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE CUSTOMER SET CPOTO = #{param2} WHERE CNO = #{param1}
 	</update>
 	
+	<!-- 일반회원 탈퇴 -->
+	<delete id="customerSignOut1">
+		DELETE REVIEW WHERE CNO = #{param1}
+	</delete>
+	<delete id="customerSignOut2">
+		DELETE APPOINTMENT WHERE CNO = #{param1}
+	</delete>
+	<delete id="customerSignOut3">
+		DELETE CUSTOMER WHERE CNO = #{param1}
+	</delete>
+	
 	<!--
 	<update id="cPhotoUpdate">
 		UPDATE CUSTOMER
@@ -144,16 +155,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<delete id="deptSignOut5">
 		DELETE DEPARTMENT WHERE DSAUP_NO=#{param1}
-	</delete>
-	
-	<delete id="customerSignOut1">
-		DELETE REVIEW WHERE CNO = #{param1}
-	</delete>
-	<delete id="customerSignOut2">
-		DELETE APPOINTMENT WHERE CNO = #{param1}
-	</delete>
-	<delete id="customerSignOut3">
-		DELETE CUSTOMER WHERE CNO = #{param1}
 	</delete>
 	
 	<insert id="menuInsert">
