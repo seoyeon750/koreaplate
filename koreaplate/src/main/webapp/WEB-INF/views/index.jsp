@@ -63,7 +63,37 @@
 			}
 			$('.invisible').html(html);
 		});
-	</script> 
+	</script>
+	
+	<style>
+		.invisible {
+			margin-top: 1px;
+			margin-left:80px;
+			top: 61px;
+			width: 500px;
+			position: absolute;
+			background: white;
+			z-index: 999;
+			border: 2px solid #ff7100;
+			border-top: 0;
+		}
+		.item {
+			height: 1.8em;
+			width: 220px;
+			margin-left: 5px;
+			margin-top: 10px;
+			outline: none;
+			font-size: 20px;
+    		padding-left: 15px;
+    		color: lightgray;
+		}
+		.item:hover {
+			color: #9baec8;
+		}
+		#aa {
+			text-decoration: none;
+		}
+	</style>
 	
 	<div class="header-wrap">
 		<div class="title-wrap">
@@ -78,6 +108,7 @@
 					<input id="search-input" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역명, 맛집 이름"	autocomplete="off" />
 					<input class="btn-search" type="submit" value="검색" />
     			</form>
+    			<div class="invisible" style="display: none"></div>
 			</div>					
 		</div>
 		

@@ -103,7 +103,7 @@
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 	
 			<!-- Sidebar - Brand -->
-			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminmanagePage">
+			<a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminmanagePage" style="margin-top: 50px;">
 	    		<div class="sidebar-brand-icon rotate-n-15">
 	      			<i class="fas fa-laugh-wink"></i>
 	    		</div>
@@ -151,7 +151,7 @@
 			<!-- Main Content -->
     		<div id="content" style="height: 90%;">
 				<!-- Begin Page Content -->
-				<div class="container-fluid"  style="height: 100%;">
+				<div class="container-fluid"  style="height: 100%; margin-top: 50px;">
 					<!-- Page Heading -->
 					<!-- Content Row -->
 					<div class="row" style="height: 100%; width:100%;">
@@ -233,3 +233,9 @@
 
 
 <%@ include file="../template/footer.jsp" %>
+
+	<style>
+		.footer-wrap{
+			margin-top: 0;
+		}
+	</style>

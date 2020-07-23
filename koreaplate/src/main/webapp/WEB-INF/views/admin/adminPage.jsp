@@ -141,7 +141,6 @@
 		function fn_cus_list(){
 			document.getElementById("custom").style.display='block';
 			document.getElementById("del").style.display='block';
-			
 			document.getElementById("dept").style.display='none';
 			
 		}
@@ -173,6 +172,18 @@
 				}
 			});
 		});
+		
+		var display = 0;
+		$('.collapsed').click(function () {
+			alert('클릭');
+			if (display == 0) {
+				$('#collapseTwo').removeClass('collapse');
+				display = 1;
+			} else {
+				$('#collapseTwo').addClass('collapse');
+				display = 0
+			}
+		});
 	</script>
 	
 	<c:if test="${sessionScope.cGrede !=5 }">
@@ -187,7 +198,7 @@
 		<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 	  
 	    	<!-- Sidebar - Brand -->
-	    	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminmanagePage">
+	    	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="adminmanagePage" style="margin-top: 50px;">
 	    		<div class="sidebar-brand-icon rotate-n-15">
 	        		<i class="fas fa-laugh-wink"></i>
 	      		</div>
@@ -234,7 +245,7 @@
 			<!-- Main Content -->
 			<div id="content" style="height: 90%;">
 				<!-- Begin Page Content -->
-				<div class="container-fluid"  style="height: 90%;">
+				<div class="container-fluid"  style="height: 90%; margin-top: 50px;">
 					<!-- Content Row -->
 					<div class="row" style="height: 90%;  width:100%;">
 						<div class="col-xl-8" style="flex: 0 0 100%; max-width: 100%; margin-top: 20px;">
@@ -322,24 +333,6 @@
 		</div>
 	</div>
 
-	<script type="text/javascript">
-		$('#deleteBtn').click(function(){
-			$('input:checkbox[name=test]:checked').each(function (){
-				alert($(this).val());
-					$.ajax({
-						type:"POST",
-						url:'deleteUser',
-						data:'cNo='+$(this).val(),
-						success:function(result){
-								
-						},error:function(){
-							
-						}
-					});
-				 
-			});
-		});
-	</script> 
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top">
@@ -361,3 +354,10 @@
   
   
 <%@ include file="../template/footer.jsp" %>
+
+	<style>
+		.footer-wrap{
+			margin-top: 0;
+		}
+	</style>
+
