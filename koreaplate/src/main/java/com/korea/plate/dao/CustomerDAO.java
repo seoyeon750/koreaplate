@@ -53,13 +53,4 @@ public interface CustomerDAO {
 	// 비밀번호 찾을 때 임시 비밀번호 저장
 	public void UpdateTempPw(String cId,String auth);
 	
-	/*
-	// 일반 회원 프로필 변경
-	public int cPhotoUpdate(String cPhoto, int cNo);
-	
-	// 사업자 정보수정
-	public void departUpdate(String dSeat,String dPhone,String dName,String dAddress, String dStart, String dEnd, String dParking, String dType );
-	
-	*/
-	
 }

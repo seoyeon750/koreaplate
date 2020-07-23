@@ -93,13 +93,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE CUSTOMER SET CPW = #{param2} WHERE CID = #{param1}
 	</update>
 	
-	<!--
-	<update id="cPhotoUpdate">
-		UPDATE CUSTOMER
-		SET CPOTO = #{param1}
-		WHERE CNO = #{param2}
-	</update>
-	
-	 -->
-	
 </mapper>

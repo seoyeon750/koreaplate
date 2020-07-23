@@ -114,7 +114,6 @@ public class CustomerController {
 	@RequestMapping(value="customerLogin", method=RequestMethod.POST,produces="text/html; charset=utf-8")
 	@ResponseBody
 	public String customerLogin(HttpServletRequest request) {
-		
 		String cId = request.getParameter("cId");
 		String cPw = request.getParameter("cPw");
 		
