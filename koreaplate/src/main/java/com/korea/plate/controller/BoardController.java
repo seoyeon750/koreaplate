@@ -1,8 +1,11 @@
 package com.korea.plate.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,12 +20,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.korea.plate.command.Board.AppointmentInsertCommand;
 import com.korea.plate.command.Board.BoardViewCommand;
 import com.korea.plate.command.Board.ReviewDetailCommand;
+import com.korea.plate.command.Board.ReviewInsertCommand;
+import com.korea.plate.command.Board.ReviewUpdateCommand;
 import com.korea.plate.command.Board.ReviewWriteCommand;
 import com.korea.plate.common.Command;
+import com.korea.plate.dao.AppointmentDAO;
 import com.korea.plate.dao.BoardDAO;
+import com.korea.plate.dao.CustomerDAO;
+import com.korea.plate.dto.CustomerDTO;
+import com.korea.plate.dto.DateDTO;
+import com.korea.plate.dto.DepartmentINFODTO;
 import com.korea.plate.dto.ReviewDTO;
 
 @Controller
@@ -95,6 +107,157 @@ public class BoardController {
 		command= new ReviewWriteCommand();
 		command.execute(sqlSession, model);
 		return "board/reviewWritePage";
+	}
+	
+	// 리뷰 삽입
+	@RequestMapping(value="insertReview", method=RequestMethod.POST)
+	public String insertReview(MultipartHttpServletRequest mrequest, Model model) {
+		model.addAttribute("mrequest", mrequest);
+		command = new ReviewInsertCommand();
+		command.execute(sqlSession, model);
+		return "redirect:viewPage?dSaup_no="+mrequest.getParameter("dSaup_no");
+	}
+	
+	// 리뷰 수정
+	@RequestMapping("UpdateReview")
+	public String ReviewUpdate(MultipartHttpServletRequest mrequest, Model model) {
+		model.addAttribute("mrequest", mrequest);
+		command = new ReviewUpdateCommand();
+		command.execute(sqlSession, model);
+		return "redirect:myPage";
+	}
+	
+	// 예약페이지
+	@RequestMapping(value = "calendar", method = RequestMethod.GET)
+	public String calendar(Model model, HttpServletRequest request, DateDTO dateData){
+		Calendar cal = Calendar.getInstance();
+		DateDTO calendarData;
+		
+		// 달력 페이지가 처음 실행되면,오늘 날짜로 date 생성
+		if(dateData.getDate().equals("")&&dateData.getMonth().equals("")){
+			dateData = new DateDTO(String.valueOf(cal.get(Calendar.YEAR)),String.valueOf(cal.get(Calendar.MONTH)),String.valueOf(cal.get(Calendar.DATE)), null);
+		}
+
+		// 이번달에 대한 모든 정보를 가져온다
+		Map<String, Integer> this_month =  dateData.this_month(dateData);
+		
+		// 달력 데이터 리스트 생성
+		List<DateDTO> dateList = new ArrayList<DateDTO>();
+		
+		// 1일에 해당하는 요일까지 null 삽입
+		for(int i=1; i<this_month.get("start"); i++){
+			calendarData= new DateDTO(null, null, null, "notButton");
+			dateList.add(calendarData);
+		}
+		
+		// 1일부터 말일까지 데이터 리스트 삽입
+		for (int i = this_month.get("startDay"); i <= this_month.get("endDay"); i++) {
+			if(i==this_month.get("today")){
+				calendarData= new DateDTO(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "today");
+			}else if (i<this_month.get("today")){
+				calendarData= new DateDTO(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "notButton");
+			}else {
+				calendarData= new DateDTO(String.valueOf(dateData.getYear()), String.valueOf(dateData.getMonth()), String.valueOf(i), "Button");
+			}
+			dateList.add(calendarData);
+		}
+
+		// 마지막 주를 직사각형 모양으로 맞추기 위해 비어있는 만큼 null 삽입
+		int index = 7-dateList.size()%7;
+		if(dateList.size()%7!=0){
+			for (int i = 0; i < index; i++) {
+				calendarData= new DateDTO(null, null, null, "notButton");
+				dateList.add(calendarData);
+			}
+		}
+		
+		model.addAttribute("dateList", dateList); // 달력 배열
+		model.addAttribute("today_info", this_month);
+		
+		String dSaup_no = request.getParameter("dSaup_no");
+		int cNo = Integer.parseInt(request.getParameter("cNo"));
+		
+		BoardDAO bDAO = sqlSession.getMapper(BoardDAO.class);
+		DepartmentINFODTO deptDTO = bDAO.DepartView(dSaup_no);
+		model.addAttribute("deptDTO", deptDTO);
+		
+		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
+		CustomerDTO cDTO = lDAO.selectBycNo(cNo);
+		model.addAttribute("cDTO", cDTO);
+		
+		return "board/bookPage";
+	}
+	
+	@RequestMapping(value="getRemainSeatANDTime", produces="text/html; charset=utf-8", method = RequestMethod.GET)
+	@ResponseBody
+	public String getRemainSeatANDTime(HttpServletRequest request) {
+		 String dSaup_no = request.getParameter("dSaup_no");
+		 String aDate = request.getParameter("aDate");
+		 		 
+		 BoardDAO bDAO = sqlSession.getMapper(BoardDAO.class);
+		 DepartmentINFODTO deptDTO = bDAO.DepartView(dSaup_no);
+		 int dStart = Integer.parseInt(deptDTO.getdStart().substring(0, 2));
+		 int dEnd = Integer.parseInt(deptDTO.getdEnd().substring(0, 2));
+		 
+		 AppointmentDAO aDAO = sqlSession.getMapper(AppointmentDAO.class);
+		 
+		 int[] remainSeat = null;
+		 
+		 // 선택한 날짜가 오늘인 경우 현재 시간 반영하여 예약 시간 선택
+		 SimpleDateFormat ysdf = new SimpleDateFormat("yyyy");
+		 SimpleDateFormat msdf = new SimpleDateFormat("MM");
+		 SimpleDateFormat dsdf = new SimpleDateFormat("dd");
+		 SimpleDateFormat hsdf = new SimpleDateFormat("HH");
+		 Calendar today = Calendar.getInstance();
+		 int year = Integer.parseInt(ysdf.format(today.getTime()));
+		 int month = Integer.parseInt(msdf.format(today.getTime()));
+		 int day = Integer.parseInt(dsdf.format(today.getTime()));
+		 String todayStr = "" + year + month + day;
+		 String html ="<select class='select_aDate_hour' name='aDate_hour'>";
+		 if (aDate.equals(todayStr)) {
+			 int hour = Integer.parseInt(hsdf.format(today.getTime()));
+			 System.out.println(hour);
+			 if (hour < dEnd) {
+				 int count = 0;
+				 remainSeat = new int[dEnd-hour];
+				 for (int i=hour+1; i<dEnd; i++) {
+					 remainSeat[count] = aDAO.selectAp_count(dSaup_no, aDate + " " + i + "00");
+					 html += "<option value="+ i + "00>";
+					 html += i + ":00 (" +  remainSeat[count++];
+					 html += "명)</option>";
+				 }
+			 } else {
+				 html += "<option value=no>예약 가능한 시간이 없습니다.</option>";
+			 }
+		 } else {
+			 remainSeat = new int[dEnd-dStart];
+			 for (int i=0; i<dEnd-dStart; i++) {
+				 remainSeat[i] = aDAO.selectAp_count(dSaup_no, aDate + " " + (dEnd-(12-i)) + "00");
+				 html += "<option value="+ (dEnd-(12-i)) + "00>";
+				 html += (dEnd-(12-i)) + ":00 (" +  remainSeat[i];
+				 html += "명)</option>";
+			 }		 
+		 }
+		 html += "</select>";
+		 return html;
+	}
+	
+	@RequestMapping(value="getRemainSeat", produces="text/html; charset=utf-8", method = RequestMethod.GET)
+	@ResponseBody
+	public String getRemainSeat(HttpServletRequest request) {
+		String dSaup_no = request.getParameter("dSaup_no");
+		String aDate = request.getParameter("aDate");
+		AppointmentDAO aDAO = sqlSession.getMapper(AppointmentDAO.class);
+		String remainSeat = aDAO.selectAp_count(dSaup_no, aDate) + "";
+		return remainSeat;
+	}
+	
+	@RequestMapping(value = "insertAppointment", method = RequestMethod.GET)
+	public String insertAppointment(HttpServletRequest request, Model model) {
+		model.addAttribute("request",request);
+		command= new AppointmentInsertCommand();
+		command.execute(sqlSession, model);
+		return "redirect:viewPage?dSaup_no="+request.getParameter("dSaup_no");
 	}
 	
 }

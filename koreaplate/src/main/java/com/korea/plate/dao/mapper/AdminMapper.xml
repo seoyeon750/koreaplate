@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.korea.plate.dao.AdminDAO">
+	
+	<!-- 관리자 메인페이지 (회원 리스트) -->
+	<select id="getCustomList" parameterType="Map" resultType="com.korea.plate.dto.CustomerDTO">
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM CUSTOMER ORDER BY CNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 전체 회원 수 -->
+	<select id="getTotelRecord" resultType="int">
+		SELECT COUNT(*) FROM CUSTOMER
+	</select>
+	
+	<!-- 수정할 회원 정보 -->
+	<select id="UpdateUserPage" resultType="com.korea.plate.dto.CustomerDTO">
+		SELECT * FROM CUSTOMER WHERE CNO = #{cNo}
+	</select>
+	
+	<!-- 수정할 회원이 작성한 리뷰 -->
+	<select id="customerReview" parameterType="Map" resultType="com.korea.plate.dto.ReviewDTO">
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM REVIEW WHERE CNO = #{cNo} ORDER BY RNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 일반회원 정보 수정 -->
+	<update id="UpdateUser">
+		UPDATE CUSTOMER SET CGRADE = #{param1} WHERE CNO = #{param2}
+	</update>
+	
+	<!-- 일반회원 삭제 -->
+	<delete id="deleteReview">
+		DELETE FROM REVIEW WHERE CNO = #{cNo}
+	</delete>
+	
+	<delete id="deleteUser">
+		DELETE FROM CUSTOMER WHERE CNO = #{cNo}
+	</delete>
+	
+	<!-- 업체회원 리스트 -->
+	<select id="getDepartmentList" parameterType="Map" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO ORDER BY DNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 업체회원 수 -->
+	<select id="getTotelDept" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT_INFO
+	</select>
+
+	<!-- 업체회원 정보 수정 -->	
+	<select id="UpdateDepartmentPage" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM DEPARTMENT_INFO WHERE DNO = #{dNo}
+	</select>
+
+	<!-- 업체승인 거절 = 삭제 -->
+	<delete id="deptReject">
+		DELETE FROM DEPARTMENT_INFO WHERE DNO = #{dNo}
+	</delete>
+
+	<!-- 승인 받아야 하는 업체 리스트 -->
+	<select id="deptAcceptList" parameterType="Map" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO WHERE DACCEPT = 0 ORDER BY DNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 승인 받아야 하는 업체 수 -->
+	<select id="deptAcceptCount" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DACCEPT = 0
+	</select>
+	
+	<!-- 승인 받아야 하는 업체 view -->	
+	<select id="deptAcceptView" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM DEPARTMENT_INFO WHERE DNO = #{dNo}
+	</select>
+	
+	<!-- 업체 승인 -->
+	<update id="deptAccept">
+		UPDATE DEPARTMENT_INFO SET DACCEPT = 1 WHERE DNO = #{dNo}
+	</update>
+	
+	<!-- 회원 검색 -->	
+	<select id="searchQueryCusInfo" parameterType="Map" resultType="com.korea.plate.dto.CustomerDTO">		
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM CUSTOMER WHERE CNAME LIKE '%' || #{query} || '%' OR CID LIKE '%' || #{query} || '%' ORDER BY CNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 검색 회원 수 -->
+	<select id="searchQueryCusCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM CUSTOMER WHERE CNAME LIKE '%' || #{query} || '%' OR CID LIKE '%' || #{query} || '%'
+	</select>
+	
+	<!-- 업체 검색 -->
+	<select id="searchQueryDeptInfo" parameterType="Map" resultType="com.korea.plate.dto.DepartmentINFODTO">		
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO WHERE DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%' ORDER BY DNO DESC) A) WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 검색 업체 수 -->
+	<select id="searchQueryDeptCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%'
+	</select>
+	
+	<!-- 승인대기 업체 검색 -->
+	<select id="searchQueryDeptAcceptInfo" parameterType="Map" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO WHERE DACCPET = 0 AND 
+		(DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%') ORDER BY DNO DESC) A)
+		WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
+	</select>
+	
+	<!-- 승인대기 업체 검색 수 -->
+	<select id="searchQueryDeptAcceptCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DACCPET = 0 AND (DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%')
+	</select>
+	
+	<!-- 
+
+	<select id="getAjaxCutomer" resultType="com.koreait.projectE.dto.CustomerDTO">
+		select * from customer 
+		where cId like '%' || #{query} || '%' or cName like '%' || #{query} || '%' 
+	</select>
+		
+	 -->
+	
+</mapper>
