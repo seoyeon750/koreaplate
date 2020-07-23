@@ -45,7 +45,7 @@ public class AdminController {
 		model.addAttribute("request", request);
 		command = new AdminSearchQueryCusInfo();
 		command.execute(sqlSession, model);
-		return "admin/adminmanagerPage";
+		return "admin/adminPage";
 	}
 	
 	// 회원 정보 수정
@@ -94,7 +94,7 @@ public class AdminController {
 		model.addAttribute("request", request);
 		command = new AdminSearchQueryDeptInfo();
 		command.execute(sqlSession, model);
-		return "admin/departmentView";
+		return "admin/departmentViewPage";
 	}
 	
 	// 업체정보 수정

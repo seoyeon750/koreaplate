@@ -101,14 +101,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 승인대기 업체 검색 -->
 	<select id="searchQueryDeptAcceptInfo" parameterType="Map" resultType="com.korea.plate.dto.DepartmentINFODTO">
-		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO WHERE DACCPET = 0 AND 
+		SELECT * FROM (SELECT ROWNUM AS RN, A.* FROM (SELECT * FROM DEPARTMENT_INFO WHERE DACCEPT = 0 AND 
 		(DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%') ORDER BY DNO DESC) A)
 		WHERE RN BETWEEN #{beginRecord} AND #{endRecord}
 	</select>
 	
 	<!-- 승인대기 업체 검색 수 -->
 	<select id="searchQueryDeptAcceptCount" parameterType="String" resultType="int">
-		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DACCPET = 0 AND (DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%')
+		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DACCEPT = 0 AND (DNAME LIKE '%' || #{query} || '%' OR DSAUP_NO LIKE '%' || #{query} || '%')
 	</select>
 	
 	<!-- 
