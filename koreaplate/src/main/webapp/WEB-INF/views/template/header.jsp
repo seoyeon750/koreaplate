@@ -110,7 +110,6 @@
 					<c:if test="${sessionScope.cId ne null}">
 						<a href="myPage" class="nav-btn"><i class="far fa-user"></i></a>
 						<input type="button" value="로그아웃"  onclick="fn_logout()" />
-						
 					</c:if>
 					<c:if test="${sessionScope.dId ne null }">
 						<a href="deptmyPage" class="nav-btn"><i class="far fa-user"></i></a>

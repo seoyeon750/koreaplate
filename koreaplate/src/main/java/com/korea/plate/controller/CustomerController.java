@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.korea.plate.command.VerifyRecaptcha;
 import com.korea.plate.command.Cust.CustomerEmailAuthCommand;
+import com.korea.plate.command.Cust.CustomerMyPageCommand;
+import com.korea.plate.command.Cust.CustomerMyPagePhotoUpdateCommand;
 import com.korea.plate.command.Cust.CustomerSignUpCommand;
 import com.korea.plate.common.Command;
 import com.korea.plate.dao.CustomerDAO;
@@ -137,5 +139,41 @@ public class CustomerController {
 		}
 		return "redirect:loginChoicePage";
 	}
+	
+	// 일반회원 마이페이지
+	@RequestMapping("myPage")
+	public String myPage(HttpServletRequest request, Model model) {
+		model.addAttribute("request", request);
+		command = new CustomerMyPageCommand();
+		command.execute(sqlSession, model);
+		return "login/customerMyPage";
+	}
+	
+	// 1. 닉네임체크
+	// 2. 닉네임 변경
+	@RequestMapping(value="nicknameUpdate", method=RequestMethod.POST, produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String nicknameUpdate(@RequestParam("cNo")int cNo ,@RequestParam("cNickname") String cNickname) {
+		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
+		return lDAO.nicknameUpdate(cNickname, cNo) + "";
+	}
+	
+	// 3. 비밀번호 변경
+	@RequestMapping(value="pwUpdate", method=RequestMethod.POST, produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String pwUpdate(@RequestParam("cPw") String cPw, @RequestParam("cNo")int cNo) {
+		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
+		return lDAO.pwUpdate(cPw, cNo) + "";
+	}
+	
+	// 4. 프로필 사진 변경
+	@RequestMapping(value="cPhotoUpdate", method=RequestMethod.POST)
+	public String cPhotoUpdate(MultipartHttpServletRequest mr, Model model) {
+		model.addAttribute("mr", mr);
+		command = new CustomerMyPagePhotoUpdateCommand();
+		command.execute(sqlSession, model);
+		return "redirect:myPage";
+	}
+	
 	
 }

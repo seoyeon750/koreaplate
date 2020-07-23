@@ -32,61 +32,48 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM CUSTOMER WHERE CID = #{param1} AND CPW = #{param2}
 	</select>
 	
-	<!-- <update id="customerPhotoUpdate">
-		UPDATE CUSTOMER
-		SET CPOTO = #{param2}
-		WHERE CNO = #{param1}
-	</update>
-		
-	<select id="selectBycNo" resultType="com.koreait.projectE.dto.CustomerDTO">
-		SELECT *
-		FROM CUSTOMER
-		WHERE CNO = #{param1}
+	<!-- 일반회원 마이페이지 -->	
+	<select id="selectBycNo" resultType="com.korea.plate.dto.CustomerDTO">
+		SELECT * FROM CUSTOMER WHERE CNO = #{param1}
 	</select>
 	
-	<select id="customerMyReview" resultType="com.koreait.projectE.dto.ReviewDTO">
-		SELECT *
-		FROM REVIEW
-		WHERE CNO = #{param1}
-	</select>
-	
-	<select id="customerMyAppointment" resultType="com.koreait.projectE.dto.AppointmentDTO">
-		SELECT *
-		FROM APPOINTMENT
-		WHERE CNO = #{param1}
+	<select id="customerMyReview" resultType="com.korea.plate.dto.ReviewDTO">
+		SELECT * FROM REVIEW WHERE CNO = #{param1}
 	</select>
 	
 	<select id="deptName" resultType="String">
-		SELECT DNAME 
-		FROM DEPARTMENT_INFO
-		WHERE DSAUP_NO = #{param1}
+		SELECT DNAME FROM DEPARTMENT_INFO WHERE DSAUP_NO = #{param1}
+	</select>
+	
+	<select id="customerMyAppointment" resultType="com.korea.plate.dto.AppointmentDTO">
+		SELECT * FROM APPOINTMENT WHERE CNO = #{param1}
 	</select>
 	
 	<select id="deptPhone" resultType="String">
-		SELECT DPHONE
-		FROM DEPARTMENT_INFO
-		WHERE DSAUP_NO = #{param1}
+		SELECT DPHONE FROM DEPARTMENT_INFO WHERE DSAUP_NO = #{param1}
 	</select>
 	
-	<update id="pwUpdate">
-		UPDATE CUSTOMER
-		SET CPW = #{param1}
-		WHERE CNO = #{param2}
-	</update>
-	
+	<!-- 닉네임 변경 -->
 	<update id="nicknameUpdate">
-		UPDATE CUSTOMER
-		SET CNICKNAME = #{param1}
-		WHERE CNO = #{param2}
+		UPDATE CUSTOMER SET CNICKNAME = #{param1} WHERE CNO = #{param2}
 	</update>
 	
+	<!-- 비밀번호 변경 -->
+	<update id="pwUpdate">
+		UPDATE CUSTOMER SET CPW = #{param1} WHERE CNO = #{param2}
+	</update>
+	
+	<!-- 프로필 사진 변경 -->
+	<update id="customerPhotoUpdate">
+		UPDATE CUSTOMER SET CPOTO = #{param2} WHERE CNO = #{param1}
+	</update>
+	
+	<!--
 	<update id="cPhotoUpdate">
 		UPDATE CUSTOMER
 		SET CPOTO = #{param1}
 		WHERE CNO = #{param2}
 	</update>
-	
-	
 	
 	<select id="selectBydSaup_no" parameterType="String" resultType="com.koreait.projectE.dto.DepartmentDTO">
 	SELECT *
@@ -99,9 +86,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET DPW = #{param1}
 		WHERE DSAUP_NO = #{param2}
 	</update>
-	
-	
-	
 	
 	<insert id="departInsert">
 		INSERT INTO DEPARTMENT_INFO

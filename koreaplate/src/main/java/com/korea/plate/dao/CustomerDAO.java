@@ -1,6 +1,10 @@
 package com.korea.plate.dao;
 
+import java.util.ArrayList;
+
+import com.korea.plate.dto.AppointmentDTO;
 import com.korea.plate.dto.CustomerDTO;
+import com.korea.plate.dto.ReviewDTO;
 
 public interface CustomerDAO {
    
@@ -16,39 +20,31 @@ public interface CustomerDAO {
 	// 일반회원 가입
 	public void customerSignUp(String cId,String cPw,String cName,String cNickname,String cPhone,String cEmail, String saveFilename, String cGender);
 	
-	// 일반 회원 로그인
+	// 일반회원 로그인
 	public CustomerDTO customerLogin(String cId, String cPw);
 	
-	/*
-	// 일반 회원 사진 업데이트
-	public void customerPhotoUpdate(String cNo, String saveFilename);
-	
-	
-
-	// 일반 회원 마이홈
-	public CustomerDTO selectBycNo(int cNo);
-	
-	// 일반 회원 마이홈 리뷰
-	public ArrayList<ReviewDTO> customerMyReview(int cNo);
-	
+	// 일반회원 마이페이지
+	public CustomerDTO selectBycNo(int cNo); // 누구인지
+	public ArrayList<ReviewDTO> customerMyReview(int cNo); // 작성한 리뷰
 	// 리뷰 업체 이름 꺼내오기
 	public String deptName(String dSaup_no);
-	
+	// 일반 회원 예약 현황
+	public ArrayList<AppointmentDTO> customerMyAppointment(int cNo);
 	// 예약 업체 전화번호 꺼내오기
 	public String deptPhone(String dSaup_no);
 	
-	// 일반 회원 예약 현황
-	public ArrayList<AppointmentDTO> customerMyAppointment(int cNo);
-	
-	// 일반 회원 비밀번호 변경
-	public int pwUpdate(String cPw, int cNo);
-	
-	// 일반 회원 닉네임 변경
+	// 일반회원 닉네임 변경
 	public int nicknameUpdate(String cNickname, int cNo );
 	
+	// 일반회원 비밀번호 변경
+	public int pwUpdate(String cPw, int cNo);
+	
+	// 일반 회원 사진 업데이트
+	public void customerPhotoUpdate(String cNo, String saveFilename);
+
+	/*
 	// 일반 회원 프로필 변경
 	public int cPhotoUpdate(String cPhoto, int cNo);
-	
 	
 	// 사업자 마이홈
 	public DepartmentDTO selectBydSaup_no(String dSaup_no);
