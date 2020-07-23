@@ -26,12 +26,9 @@ public interface CustomerDAO {
 	// 일반회원 마이페이지
 	public CustomerDTO selectBycNo(int cNo); // 누구인지
 	public ArrayList<ReviewDTO> customerMyReview(int cNo); // 작성한 리뷰
-	// 리뷰 업체 이름 꺼내오기
-	public String deptName(String dSaup_no);
-	// 일반 회원 예약 현황
-	public ArrayList<AppointmentDTO> customerMyAppointment(int cNo);
-	// 예약 업체 전화번호 꺼내오기
-	public String deptPhone(String dSaup_no);
+	public String deptName(String dSaup_no); // 작성한 리뷰 업체
+	public ArrayList<AppointmentDTO> customerMyAppointment(int cNo); // 예약 리스트
+	public String deptPhone(String dSaup_no); // 예약 업체 전화번호
 	
 	// 일반회원 닉네임 변경
 	public int nicknameUpdate(String cNickname, int cNo );
@@ -47,51 +44,22 @@ public interface CustomerDAO {
 	public void customerSignOut2(String cNo);
 	public void customerSignOut3(String cNo);
 
+	// 일반회원 아이디 찾기 
+	public String finduId(String cName,String cEmail);
+	
+	// 일반회원 비밀번호 찾기 
+	public int finduPw(String cId,String cEmail);
+	
+	// 비밀번호 찾을 때 임시 비밀번호 저장
+	public void UpdateTempPw(String cId,String auth);
+	
 	/*
 	// 일반 회원 프로필 변경
 	public int cPhotoUpdate(String cPhoto, int cNo);
 	
-	// 사업자 마이홈
-	public DepartmentDTO selectBydSaup_no(String dSaup_no);
-	
-	// 사업자 비밀번호 변경
-	public int deptpwUpdate(String dPw, String dSaup_no);
-	
-	// 사업자 정보수정 승인요청
-	public void departInsert(String dSeat,String dSaup_no,String dPhone,String dName,String dAddress, String dStart, String dEnd, String dParking, String dType, String amuguna );
-	
-	public void departUpdate(String dSeat,String dSaup_no,String dPhone,String dName,String dAddress, String dStart, String dEnd, String dParking, String dType, String amuguna, String dNo );
-	
-	public int goDb(String dSaup_no);
 	// 사업자 정보수정
 	public void departUpdate(String dSeat,String dPhone,String dName,String dAddress, String dStart, String dEnd, String dParking, String dType );
-
-	//사용자 아이디 찾기 
-	public String finduId(String cName,String cEmail);
 	
-	//사용자 비밀번호 찾기 
-	public int finduPw(String cId,String cEmail);
-	
-	//사용자 임시 비밀번호 저장
-	public void UpdateTempPw(String cId,String auth);
-	
-	//업체 아이디 찾기 
-	public String find_dept_id(String dSaup_no,String dPhone);
-	
-	//업체 비밀번호 찾기 
-	public int findDeptPw(String dId,String dSaup_no);
-	
-	// 업체 회원 탈퇴
-	public void deptSignOut1(String dSaup_no);
-	public void deptSignOut2(String dSaup_no);
-	public void deptSignOut3(String dSaup_no);
-	public void deptSignOut4(String dSaup_no);
-	public void deptSignOut5(String dSaup_no);
-	
-	// 업체 메뉴 추가
-	public void menuInsert(String menu, String price, String dSaup_no);
-	
-	// 메뉴 삭제
-	public void menuDelete(String dSaup_no);*/
+	*/
 	
 }

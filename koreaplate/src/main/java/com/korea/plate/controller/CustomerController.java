@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.korea.plate.command.VerifyRecaptcha;
 import com.korea.plate.command.Cust.CustomerEmailAuthCommand;
+import com.korea.plate.command.Cust.CustomerFindIdPwCommand;
 import com.korea.plate.command.Cust.CustomerMyPageCommand;
 import com.korea.plate.command.Cust.CustomerMyPagePhotoUpdateCommand;
 import com.korea.plate.command.Cust.CustomerSignOutCommand;
@@ -188,6 +189,66 @@ public class CustomerController {
 			session.invalidate();
 		}
 		return "redirect:index"; 
+	}
+	
+	// 일반회원 아이디/비밀번호 찾기 페이지
+	@RequestMapping("findUserIdPw")
+	public String goFindUserId() {
+		return "login/customerfindUserIdPw";
+	}
+	
+	// 일반회원 아이디 찾기 
+	@RequestMapping(value="find_user_id", method=RequestMethod.POST, produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String find_uId(HttpServletRequest request,Model model) {
+		String cName  = request.getParameter("cName");
+		String cEmail  = request.getParameter("cEmail");
+		
+		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
+		String cId = lDAO.finduId(cName, cEmail);
+		String message ="";
+		
+		if(cId !=null) {
+			model.addAttribute("cId", cId);
+			model.addAttribute("cName", cName);
+			model.addAttribute("cEmail", cEmail);
+			model.addAttribute("type", "id");
+			model.addAttribute("mailSender", mailSender);
+			CustomerFindIdPwCommand cmd =new CustomerFindIdPwCommand();
+			cmd.execute(sqlSession, model);
+			
+			message ="등록된 이메일로 아이디를 보냈습니다.";
+		}else {
+			message ="등록된 사용자가 없습니다. 다시 확인해주세요";
+		}
+		return message;
+	}
+	
+	// 일반회원 비밀번호 찾기 
+	@RequestMapping(value="find_user_pw", method=RequestMethod.POST, produces="text/html; charset=utf-8")
+	@ResponseBody
+	public String find_uPw(HttpServletRequest request,Model model) {
+		String cId  = request.getParameter("cId");
+		String cEmail  = request.getParameter("cEmail");
+		
+		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
+		int count =lDAO.finduPw(cId, cEmail);
+		
+		String message ="";
+		if(count>0) {
+			model.addAttribute("cId", cId);
+			//model.addAttribute("cName", cName);
+			model.addAttribute("cEmail", cEmail);
+			model.addAttribute("type", "pw");
+			model.addAttribute("mailSender", mailSender);
+			CustomerFindIdPwCommand cmd =new CustomerFindIdPwCommand();
+			String emailAuth = (String) cmd.execute(sqlSession, model);
+			lDAO.UpdateTempPw(cId,emailAuth);
+			message ="등록된 이메일로 임시 비밀번호를 보냈습니다.";
+		}else {
+			message ="등록된 사용자가 없습니다. 다시 확인해주세요";
+		}
+		return message;
 	}
 	
 }

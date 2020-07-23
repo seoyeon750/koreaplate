@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<title>회원가입</title>
+<title>Insert title here</title>
 	<style>
 		#pwUpdate{
 			display:none;
@@ -370,7 +370,7 @@
             <br/><br/>
             <div class="form-group">
                 <div class="col-lg-offset-2 col-lg-10">
-                    <input type="button" value="돌아가기" class="btn btn-primary" onclick="index" />
+                    <input type="button" value="돌아가기" class="btn btn-primary" onclick="location.href='index'" />
                     <input type="button" value="회원탈퇴" class="btn btn-primary" onclick="fn_customerSignOut(this.form)" />
                 </div>
             </div>

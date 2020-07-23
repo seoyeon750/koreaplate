@@ -21,9 +21,9 @@ public class CustomerSignOutCommand implements Command {
 		String cNo = request.getParameter("cNo");
 		CustomerDAO lDAO = sqlSession.getMapper(CustomerDAO.class);
 		
-		lDAO.customerSignOut1(cNo);
-		lDAO.customerSignOut2(cNo);
-		lDAO.customerSignOut3(cNo);
+		lDAO.customerSignOut1(cNo); // 리뷰삭제
+		lDAO.customerSignOut2(cNo); // 예약삭제
+		lDAO.customerSignOut3(cNo); // 회원탈퇴
 		
 	}
 

@@ -25,4 +25,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT *FROM DEPARTMENT WHERE DID = #{param1} AND DPW = #{param2}
 	</select>
 	
+	<!-- 업체회원 마이페이지 -->	
+	<select id="selectBydSaup_no" parameterType="String" resultType="com.korea.plate.dto.DepartmentINFODTO">
+		SELECT * FROM DEPARTMENT_INFO WHERE DSAUP_NO = #{param1}
+	</select>
+	
+	<!-- 업체회원 비밀번호 변경 -->
+	<update id="deptpwUpdate">
+		UPDATE DEPARTMENT SET DPW = #{param1} WHERE DSAUP_NO = #{param2}
+	</update>
+	
+	<!-- 업체 정보수정 승인요청 -->
+	<select id="goDb" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM DEPARTMENT_INFO WHERE DSAUP_NO = #{param1}
+	</select>
+	
+	<insert id="departInsert">
+		INSERT INTO DEPARTMENT_INFO VALUES (DEPARTMENT_INFO_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3}, #{param4}, #{param5}, #{param6}, #{param7},#{param8}, #{param9},#{param10}, 0, 0.0, 0, SYSDATE)
+	</insert>
+	
+	<update id="departUpdate">
+		UPDATE DEPARTMENT_INFO SET DSEAT = #{param1}, DSAUP_NO = #{param2}, DPHONE = #{param3}, DNAME = #{param4}, DADDRESS = #{param5}, DSTART = #{param6}, DEND = #{param7}, DPARKING = #{param8}, DTYPE = #{param9}, DPHOTO = #{param10} WHERE DNO = #{param11}
+	</update>
+	
+	<!-- 메뉴 삭제 -->
+	<delete id="menuDelete">
+		DELETE FROM MENU_INFO WHERE DSAUP_NO = #{param1}
+	</delete>
+	
+	<!-- 메뉴 삽입 -->
+	<insert id="menuInsert">
+		INSERT INTO MENU_INFO VALUES (MENU_SEQ.NEXTVAL, #{param1}, #{param2}, #{param3})
+	</insert>
+	
+	<!-- 업체회원 탈퇴 -->
+	<delete id="deptSignOut1">
+		DELETE REVIEW WHERE DSAUP_NO=#{param1}
+	</delete>
+	
+	<delete id="deptSignOut2">
+		DELETE APPOINTMENT WHERE DSAUP_NO=#{param1}
+	</delete>
+	
+	<delete id="deptSignOut3">
+		DELETE MENU_INFO WHERE DSAUP_NO=#{param1}
+	</delete>
+	
+	<delete id="deptSignOut4">
+		DELETE DEPARTMENT_INFO WHERE DSAUP_NO=#{param1}
+	</delete>
+	
+	<delete id="deptSignOut5">
+		DELETE DEPARTMENT WHERE DSAUP_NO=#{param1}
+	</delete>
+	
+	<!-- 업체회원 아이디 찾기 -->
+	<select id="find_dept_id" resultType="String">
+		SELECT D.DID FROM DEPARTMENT_INFO DI, DEPRTMENT D WHERE DI.DSAUP_NO = #{param1} AND DI.DPHONE = #{param2} AND DI.DSAUP_NO = D.DSAUP_NO
+	</select>
+	
+	<!-- 업체회원 비밀번호 찾기 -->
+	<select id="findDeptPw" resultType="int">
+		SELECT COUNT(*) FROM DEPARTMENT WHERE DID = #{param1} AND DSAUP_NO = #{param2}
+	</select>
+	
 </mapper>
