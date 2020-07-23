@@ -98,8 +98,8 @@ public class DateDTO {
 		this_month_data.put("startDay", startDay); // 1
 		this_month_data.put("endDay", endDay); // 말일
 		this_month_data.put("today", today); // 오늘날짜 dd
-		this_month_data.put("next_year", next_year);
-		this_month_data.put("next_month", next_month+1);
+		this_month_data.put("search_year", next_year);
+		this_month_data.put("search_month", next_month+1);
 		this_month_data.put("after_year", before_after_calendar.get("after_year")); // 다음년도
 		this_month_data.put("after_month", before_after_calendar.get("after_month")); // 다음달
 		return this_month_data;
