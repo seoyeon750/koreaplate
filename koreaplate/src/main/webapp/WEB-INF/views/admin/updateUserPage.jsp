@@ -4,6 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ include file="../template/header.jsp" %>
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
 <link href="resources/assets/style/admin/sb-admin-2.min.css" rel="stylesheet">
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -25,6 +26,7 @@
 	<style type="text/css">
 		.user {
 			width: 700px;
+			height: 200px;
 			border: none;
 			border-collapse: collapse;	
 		}
@@ -138,6 +140,7 @@
         .total_wrap, .bordered {
         	width: 1000px;
         	margin: auto;
+        	margin-bottom: 20px;
         }
         
         .img_wrap {
@@ -145,7 +148,12 @@
         	height: 200px;
         	float: left;
         	margin-right: 50px;
-        }		
+        }
+        
+        img {
+        	width: 200px;
+        	height: 200px;
+        }
 	</style>
 
 	<!-- Page Wrapper -->
@@ -216,7 +224,8 @@
 										<!-- 내용 부분 -->
 										<div class="total_wrap">
 											<div class="img_wrap">
-												<img alt="${cDTO.cPhoto}" src="${pageContext.request.contextPath }/resources/storage/department_img/${cDTO.cPhoto}">
+												<c:if test="${cDTO.cPhoto eq null}"><i class="fas fa-user-circle"></i></c:if>
+												<c:if test="${cDTO.cPhoto ne null }"><img alt="${cDTO.cPhoto}" src="${pageContext.request.contextPath }/resources/storage/user_img/${cDTO.cPhoto}"></c:if>
 											</div>
 											<form class="UpdateUser" action="UpdateUser">
 												<table class="user">
