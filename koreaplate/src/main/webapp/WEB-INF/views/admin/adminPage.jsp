@@ -93,7 +93,6 @@
 		    color: gray;
 		    display: inline-block;
 		    font-weight: bold;
-		    margin: 1em auto;
 		    padding: 0em 1em;
 		    position: relative;
 		    right: 0;
@@ -111,11 +110,18 @@
 			text-align: right;
 		}
 		
+		.totalCustomer {
+			display: inline-block;
+			vertical-align: bottom;
+			height: 5px;
+			line-height: 90%;
+		}
+		
 		.center {
 			width: 1000px;
+			height: 40px;
 			text-align: left;
 			margin: auto;
-			margin-bottom: 5px;
 		}
 		.searchbox_wrap {
 			float: right;
@@ -250,14 +256,14 @@
 					<div class="row" style="height: 90%;  width:100%;">
 						<div class="col-xl-8" style="flex: 0 0 100%; max-width: 100%; margin-top: 20px;">
 							<!-- Area Chart -->
-							<div class="card shadow mb-4" style="height: 95%; width:100%;">
+							<div class="card shadow mb-4" style="height: 100%; width:100%;">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">회원 리스트</h6>
 								</div>
 								<div class="card-body"  style="height: 90%;">
 									<div class="chart-area"  style="height: 90%;">
 										<!-- 내용 부분 -->
-										<div id="custom" style="width:1000px; ">
+										<div id="custom" style="width:1000px; margin: auto;">
 											<form action="searchQueryCusInfo">
 												<div class="center">
 													<span class="totalCustomer" style= "margin: auto;">전체 회원 수 : ${totalRecord}명</span>

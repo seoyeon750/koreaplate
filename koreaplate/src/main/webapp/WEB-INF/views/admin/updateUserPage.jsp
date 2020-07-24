@@ -23,44 +23,36 @@
 	</c:if>
 	
 	<style type="text/css">
-		form-wrap table {
-			width: 500px;
-			margin: auto;
-			border: 1px solid;
+		.user {
+			width: 700px;
+			border: none;
 			border-collapse: collapse;	
-		    border-top: 1px solid #ccc;
-		    border-left: 3px solid #369;
 		}
-		th {
-		    width: 147px;
+		.user th {
+		    width: 20%;
 		    padding: 10px;
 		    font-weight: bold;
 			text-align: left;
 		    color: #153d73;
-		    border: 1px solid black;
 			background: #efefef;
-			font-size: 120%;
+			font-size: 15px;
 		}
-		td {
-		    width: 349px;
+		.user td {
+		    width: 30%;
 		    padding: 10px;
-		    border: 1px solid black;
-		    font-size: 100%;
+		    font-size: 15px;
 		}
 		#btnUpdate {
 			width:100px;
 		    background-color: #f8585b;
 		    border: none;
-		    padding: 15px 0;
+		    padding: 5px;
 		    color:#fff;
 		    text-align: center;
-		    text-decoration: none;
 		    display: inline-block;
 		    font-size: 15px;
-		    margin: 4px;
 		    cursor: pointer;
 		}
-		
 		ul {
 		    list-style-type: none;
 		    margin: 0;
@@ -72,31 +64,36 @@
 		    display: block;
 		    clear:both;
 		}	
-		.bordered,.form-wrap{
-			display:inline-block; 
+		#reviewTable {
+			clear: left;
+			width: 100%;
+			height: 400px;
+			margin-bottom: 10px;
 		}
-		.bordered {
-			height: 500px;
-			position: absolute;
-			top: 70px
-		}
-		.bordered table {
-			display: inline-block;
-		    width: 1000px;
-		    margin-left: 20px;
+		
+		#reviewTable th {
+		    padding: 10px;
+		    font-weight: bold;
 		    text-align: center;
-		    border-collapse: collapse;
-		    border: 1px solid black;
+		    color: #153d73;
+			background: #efefef;
+			font-size: 15px;
 		}
-		.boarded tr,.boarded td{
-		 	border: 1px solid black;
-		}
+		
+		#reviewTable th:nth-of-type(1) {width: 20%;}
+		#reviewTable th:nth-of-type(2) {width: 20%;}
+		#reviewTable th:nth-of-type(3) {width: 55%;}
+		#reviewTable th:nth-of-type(4) {width: 5%;}
+		
+		#reviewTable td { text-align: center; }
+		#reviewTable td:nth-of-type(3) { text-align: left; }
+		
 		.pageView{
 			display:inline-block;
 			width:100%;
 			text-align: center;
-			
 		}
+		
 		 #Modal,#myModal {
           display: none;
           position:relative;
@@ -110,7 +107,6 @@
           margin:0;
         }
        
-        
         #Modal .modal-content,#myModal .modal-body {
           width:100%;
           height:100%;
@@ -129,14 +125,27 @@
           background:rgba(0, 0, 0, 0.5);
           z-index:-1;
         }
+        
         #myModal .modal-header{
         	position: relative;
         	width: 1040px;
         }
+        
         #reviewTable tbody >tr:hover{
         	background-color: lightpink; 
         }
-		
+        
+        .total_wrap, .bordered {
+        	width: 1000px;
+        	margin: auto;
+        }
+        
+        .img_wrap {
+        	width: 200px;
+        	height: 200px;
+        	float: left;
+        	margin-right: 50px;
+        }		
 	</style>
 
 	<!-- Page Wrapper -->
@@ -193,48 +202,41 @@
 			<!-- Main Content -->
 			<div id="content" style="height: 90%;">
 				<!-- Begin Page Content -->
-				<div class="container-fluid"  style="height: 100%; margin-top: 50px;">
+				<div class="container-fluid"  style="height: 90%; margin-top: 50px;">
 					<!-- Content Row -->
-					<div class="row" style="height: 100%; width:100%;">
+					<div class="row" style="height: 95%; width:100%;">
 						<div class="col-xl-8"  style="flex: 0 0 100%; max-width: 100%; margin-top: 20px;">
 							<!-- Area Chart -->
-							<div class="card shadow mb-4"  style="height: 90%; width:100%;">
+							<div class="card shadow mb-4"  style="height: 100%; width:100%;">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">회원 상세정보</h6>
 								</div>
-								<div class="card-body"  style="height: 100%;">
+								<div class="card-body"  style="height: 90%;">
 									<div class="chart-area"  style="height: 100%;">
 										<!-- 내용 부분 -->
-										<div class="form-wrap">
+										<div class="total_wrap">
+											<div class="img_wrap">
+												<img alt="${cDTO.cPhoto}" src="${pageContext.request.contextPath }/resources/storage/department_img/${cDTO.cPhoto}">
+											</div>
 											<form class="UpdateUser" action="UpdateUser">
 												<table class="user">
 													<tr>
 														<th>이름</th>
-														<td>${cDTO.cName }</td>
-													</tr>
-													<tr>
-														<th>성별</th>
-														<td>${cDTO.cGender == 1 ? '남' : '여'}</td>
-													</tr>
-													<tr>
-														<th>닉네임</th>
-														<td>${cDTO.cNickname }</td>
-													</tr>
-													<tr>
-														<th>아이디</th>
-														<td>${cDTO.cId }</td>
-													</tr>
-													<tr>
-														<th>비밀번호</th>
-														<td>${cDTO.cPw }</td>
-													</tr>
-													<tr>
+														<td>${cDTO.cName} (${cDTO.cNickname}, ${cDTO.cGender == 1 ? '남' : '여'})</td>
 														<th>휴대폰번호</th>
 														<td>${fn:substring(cDTO.cPhone, 0, 3)}-${fn:substring(cDTO.cPhone, 3, 7)}-${fn:substring(cDTO.cPhone, 7, 11)}</td>
 													</tr>
 													<tr>
+														<th>아이디</th>
+														<td>${cDTO.cId }</td>
 														<th>이메일</th>
 														<td>${cDTO.cEmail }</td>
+													</tr>
+													<tr>
+														<th>비밀번호</th>
+														<td>${cDTO.cPw }</td>
+														<th>가입일</th>
+														<td>${cDTO.cRegdate }</td>
 													</tr>
 													<tr>
 														<th>등급</th>
@@ -276,39 +278,29 @@
 																	<option value="5" selected="selected">관리자</option> 
 																</c:if>
 															</select>
-															
 														</td>
-													</tr>
-													<tr>
-														<th>가입날짜</th>
-														<td>${cDTO.cRegdate }</td>
-													</tr>
-													<tr>
-														<td colspan="2" align="center">
+														<td colspan="2" style="text-align: right;">
 															<input type="hidden" value="${cDTO.cNo }" name=cNo>
 															<button type="submit" id="btnUpdate" >수정</button>
-														</td> 
+														</td>
 													</tr>
 												</table>
 											</form>
-											
 										</div>
 										<div class="bordered">
-										     <table border="1" id="reviewTable"  >
+										     <table id="reviewTable"  >
 												<thead style="background-color: #ccc;">
 													<tr>
-														<td>업체</td>
-														<td>제목</td>
-														<td>내용</td>
-														<td>별점</td>
-													<tr>	
+														<th>업체</th>
+														<th>제목</th>
+														<th>내용</th>
+														<th>별점</th>
+													<tr>
 												</thead>		 
 												<tbody>
 													<c:if test="${empty list }">
 														<tr>
-															<td colspan="5">
-																없음
-															</td>
+															<td colspan="5" style="text-align: center;">작성한 리뷰가 없습니다.</td>
 														</tr>
 													</c:if>
 													<c:if test="${not empty list }">
@@ -325,12 +317,10 @@
 																		${rDTO.rContent }
 																	</c:if>
 																</td>
-																<td>${rDTO.rPoint }<input type="hidden" value="${rDTO.rNo }" name="rNo" id="rNo"/></td>
-																
+																<td>${rDTO.rPoint }<input type="hidden" value="${rDTO.rNo }" name="rNo" id="rNo"/></td>	
 															</tr>
 														</c:forEach>
 													</c:if>
-													
 												</tbody>
 											</table>
 											<div class="pageView">

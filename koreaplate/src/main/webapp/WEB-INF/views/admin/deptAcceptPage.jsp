@@ -151,18 +151,18 @@
 			<!-- Main Content -->
     		<div id="content" style="height: 90%;">
 				<!-- Begin Page Content -->
-				<div class="container-fluid"  style="height: 100%; margin-top: 50px;">
+				<div class="container-fluid"  style="height: 90%; margin-top: 50px;">
 					<!-- Page Heading -->
 					<!-- Content Row -->
-					<div class="row" style="height: 100%; width:100%;">
+					<div class="row" style="height: 90%; width:100%;">
 						<div class="col-xl-8" style="flex: 0 0 100%; max-width: 100%; margin-top: 20px;">
 							<!-- Area Chart -->
-							<div class="card shadow mb-4"  style="height: 95%; width:100%;">
+							<div class="card shadow mb-4"  style="height: 100%; width:100%;">
 								<div class="card-header py-3">
 									<h6 class="m-0 font-weight-bold text-primary">업체 승인 대기목록</h6>
 								</div>
-                				<div class="card-body"  style="height: 100%;">
-                  					<div class="chart-area"  style="height: 100%;">
+                				<div class="card-body"  style="height: 90%;">
+                  					<div class="chart-area"  style="height: 90%;">
                   						<!-- 내용 부분 -->
                     					<div id="custom" style="width:100%; margin: auto;">
                     						<form action="searchQueryDeptAcceptInfo">
