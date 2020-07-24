@@ -44,9 +44,9 @@ public class BoardController {
 	private SqlSession sqlSession;
 	private Command command;
 	
-	@RequestMapping(value="viewPage",method=RequestMethod.GET)
+	@RequestMapping(value="viewPage", method=RequestMethod.GET)
 	public String viewPage(HttpServletRequest request, Model model) {
-		model.addAttribute("request",request);
+		model.addAttribute("request",request);		
 		command = new BoardViewCommand();
 		command.execute(sqlSession, model);
 		return "board/viewPage";
@@ -119,7 +119,7 @@ public class BoardController {
 	}
 	
 	// 리뷰 수정
-	@RequestMapping("UpdateReview")
+	@RequestMapping(value="UpdateReview", method=RequestMethod.POST)
 	public String ReviewUpdate(MultipartHttpServletRequest mrequest, Model model) {
 		model.addAttribute("mrequest", mrequest);
 		command = new ReviewUpdateCommand();

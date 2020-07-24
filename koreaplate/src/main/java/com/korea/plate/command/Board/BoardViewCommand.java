@@ -23,7 +23,6 @@ public class BoardViewCommand implements Command {
 		HttpServletRequest request = (HttpServletRequest) map.get("request");
 		
 		String dSaup_no = request.getParameter("dSaup_no");
-		
 		BoardDAO bdao =sqlSession.getMapper(BoardDAO.class);
 		
 		// 페이지 로딩 시  

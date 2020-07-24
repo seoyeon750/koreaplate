@@ -24,12 +24,12 @@ public class ReviewUpdateCommand implements Command {
 		int rPoint = Integer.parseInt(mrequest.getParameter("rPoint"));   
 		String rTitle = mrequest.getParameter("rTitle");		
 		String rContent = mrequest.getParameter("rContent");
-		List<MultipartFile> fileList = mrequest.getFiles("rPoto");
+		List<MultipartFile> fileList = mrequest.getFiles("rPhoto");
 		int rNo= Integer.parseInt(mrequest.getParameter("rNo"));  
 		String dSaup_no = mrequest.getParameter("dSaup_no");
 		int cNo=Integer.parseInt(mrequest.getParameter("cNo"));
 		ReviewDAO rDAO = sqlSession.getMapper(ReviewDAO.class);
-		String rPoto = ""; // 실제 DB에 들어가는 필드
+		String rPhoto = ""; // 실제 DB에 들어가는 필드
 		int count = 0;
 		
 		if (fileList != null && fileList.size() > 0) { // 파일첨부 O
@@ -47,9 +47,9 @@ public class ReviewUpdateCommand implements Command {
 								"." + extName;	
 						
 						if (count == fileList.size()) {
-							rPoto += saveFilename;
+							rPhoto += saveFilename;
 						} else {
-							rPoto += saveFilename + ",";
+							rPhoto += saveFilename + ",";
 						}
 						
 						String realPath = mrequest.getSession().getServletContext().getRealPath("/resources/storage/review_img");
@@ -68,9 +68,9 @@ public class ReviewUpdateCommand implements Command {
 					}
 				}
 			}
-			rDAO.updateReview(rTitle, rContent, rPoint, rPoto,cNo,dSaup_no, rNo);	
+			rDAO.updateReview(rTitle, rContent, rPoint, rPhoto, cNo, dSaup_no, rNo);	
 		} else { // 파일첨부 X
-			rDAO.updateReview(rTitle, rContent, rPoint, null,cNo,dSaup_no,rNo);
+			rDAO.updateReview(rTitle, rContent, rPoint, null, cNo, dSaup_no,rNo);
 		}
 		BoardDAO bdao =sqlSession.getMapper(BoardDAO.class);
 		bdao.DepartRatingUpdate(dSaup_no);

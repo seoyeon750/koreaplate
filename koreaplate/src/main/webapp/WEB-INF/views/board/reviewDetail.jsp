@@ -189,7 +189,7 @@
 			margin-bottom: 9px;
 		}
 		
-		#star_grade a{
+		.star {
 			display: inline-block;
 			font-size: 32px;
        		text-decoration: none;
@@ -197,7 +197,7 @@
     	    width: 32px;
 	    }
 	    
-	    #star_grade a.on{
+	    .on {
 	        color: red;
 	    }
 	    
@@ -307,12 +307,12 @@
 					<p id="star_grade">
 				        <c:forEach var="i" begin="0" end="5" step="1">
 							<c:if test="${rdto.rPoint > i }">
-							 <a class="on">★</a>
+								<a class="on star" style="color: red;">★</a>
 							</c:if>
 							<c:if test="${rdto.rPoint < i }">
-								<a >★</a>
+								<a class="star">★</a>
 							</c:if>
-				      </c:forEach>
+				    	</c:forEach>
 					</p>
 					<input id="star" type="hidden" name="rPoint" value='${rdto.rPoint }'/>
 				</div>
@@ -368,10 +368,10 @@
 				<p>
 			      <c:forEach var="i" begin="0" end="5" step="1">
 					<c:if test="${rdto.rPoint > i }">
-					 <a class="on">★</a>
+					 <a class="on star">★</a>
 					</c:if>
 					<c:if test="${rdto.rPoint < i }">
-						<a >★</a>
+						<a class="star">★</a>
 					</c:if>
 			      </c:forEach>
 				</p>
