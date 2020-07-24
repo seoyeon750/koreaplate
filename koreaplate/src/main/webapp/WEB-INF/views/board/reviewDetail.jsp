@@ -240,7 +240,7 @@
 			document.myForm.star.value=star;
 		}
 		
-		$('#star_grade a').click(function(){
+		$('.mystar').click(function(){
             $(this).parent().children("a").removeClass("on"); /* 별점의 on 클래스 전부 제거 */ 
             $(this).addClass("on").prevAll("a").addClass("on"); /* 클릭한 별과, 그 앞 까지 별점에 on 클래스 추가 */
             return false;
@@ -307,7 +307,7 @@
 					<p id="star_grade">
 				        <c:forEach var="i" begin="0" end="5" step="1">
 							<c:if test="${rdto.rPoint > i }">
-								<a class="on star" style="color: red;">★</a>
+								<a class="on star mystar" onclick="mark(i+1)">★</a>
 							</c:if>
 							<c:if test="${rdto.rPoint < i }">
 								<a class="star">★</a>
