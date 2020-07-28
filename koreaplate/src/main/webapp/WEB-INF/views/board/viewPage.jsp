@@ -361,7 +361,7 @@
 			modal.find('.modal-body').load(button.data("remote"));
 		});
 		function fnMove(){
-		       var offset = $("#reviewListFocusId" ).offset();
+		       var offset = $("#reviewListFocusId").offset();
 		       var top =offset.top-100; 
 		       $('html,body ').animate({scrollTop :top});
 		}

@@ -379,7 +379,6 @@
 	  <i class="fas fa-angle-up"></i>
 	</a>
 
-
 <!-- Bootstrap core JavaScript-->
 <script src="resources/assets/style/admin/jquery/jquery.min.js"></script>
 <script src="resources/assets/style/admin/bootstrap/js/bootstrap.bundle.min.js"></script>
